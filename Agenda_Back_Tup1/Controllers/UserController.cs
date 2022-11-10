@@ -3,6 +3,7 @@ using Agenda_Back_Tup1.Models.DTO;
 using Agenda_Back_Tup1.Repository.Implementatios;
 using Agenda_Back_Tup1.Repository.Interfaces;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,7 @@ namespace Agenda_Back_Tup1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]//******* para que tengamos que tener un token valido para acceder
     public class UserController : ControllerBase
     {
         private readonly IMapper _mapper;

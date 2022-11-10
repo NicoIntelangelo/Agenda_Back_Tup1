@@ -1,5 +1,6 @@
 ﻿using Agenda_Back_Tup1.Data;
 using Agenda_Back_Tup1.Entities;
+using Agenda_Back_Tup1.Models.DTO;
 using Agenda_Back_Tup1.Repository.Interfaces;
 
 namespace Agenda_Back_Tup1.Repository.Implementatios
@@ -42,6 +43,15 @@ namespace Agenda_Back_Tup1.Repository.Implementatios
         {
             _context.Users.Update(user);
             _context.SaveChanges();
+        }
+
+        public User? ValidateUser(AuthenticationRequestBody authRequestBody)
+        {
+            return _context.Users.FirstOrDefault(p => p.Email == authRequestBody.Email && p.Password == authRequestBody.Password);
+        }
+        public User? GetById(int userId)
+        {
+            return _context.Users.SingleOrDefault(u => u.Id == userId);
         }
     }
 }
