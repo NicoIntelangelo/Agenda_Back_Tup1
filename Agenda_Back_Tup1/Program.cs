@@ -26,9 +26,10 @@ builder.Services.AddAutoMapper(typeof(Program));
 //Add Services ****************** para poder inyectar los repository
 
 builder.Services.AddScoped<IContactoRepository, ContactoRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 
-
+    
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

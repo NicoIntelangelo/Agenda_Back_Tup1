@@ -18,5 +18,13 @@ namespace Agenda_Back_Tup1.Repository.Implementatios
             return _context.Contactos.Where(c => c.AgendaId == agendaId).ToList();
 
         }
+
+        public Contacto GetContacto(int id)
+        {
+            return _context.Contactos.Find(id);
+
+        }
+
+
     }
 }

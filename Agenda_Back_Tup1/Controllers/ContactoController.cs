@@ -19,8 +19,8 @@ namespace Agenda_Back_Tup1.Controllers
             _contactoRepository = contactoRepository;
         }
 
-        [HttpGet("{agendaId}")]
-
+        
+        [HttpGet("getByAgenda/{agendaId}")]
         public IActionResult Get(int agendaId)
         {
             try
@@ -30,6 +30,36 @@ namespace Agenda_Back_Tup1.Controllers
                 var listaContactosDTO = _mapper.Map<IEnumerable<ContactoDTO>>(listaContactos);
 
                 return Ok(listaContactosDTO);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult Get2(int id)
+        {
+            try { 
+            //{
+            //    if (str == "contacto")
+            //    {
+            //    }
+                   
+                    var contacto = _contactoRepository.GetContacto(id); 
+
+                    if (contacto == null)
+                    {
+                        return NotFound();
+                    }
+
+                    var contactoDto = _mapper.Map<ContactoDTO>(contacto); // mapea la mascota que saco de la db(entidad), en el <MascotaDto>
+
+                    return Ok(contactoDto);
+                //else
+                //{
+                //    return BadRequest("debe tener 'conctacto/' antes de el id");
+                //}
             }
             catch (Exception ex)
             {
