@@ -24,7 +24,7 @@ namespace Agenda_Back_Tup1.Controllers
         }
 
         
-        [HttpGet]
+        [HttpGet("getallusers")]
         public IActionResult GetuUsers()
         {
             try
@@ -41,29 +41,8 @@ namespace Agenda_Back_Tup1.Controllers
             }
         }
         
-        [HttpPost]
-        public IActionResult PostUser(UserDTOCreacion userDtoCreacion)
-        {
-            try
-            {
-                //int nico = Int32.Parse(HttpContext.User.Claims.SingleOrDefault(c => c.Type.Contains("sub")).Value);
-                
-                var user = _mapper.Map<User>(userDtoCreacion);
 
-
-                var userItem = _userRepository.AddUser(user);
-
-                var userItemDto = _mapper.Map<UserDTO>(userItem);
-
-                return CreatedAtAction("Get", new { id = userItemDto.Id }, userItemDto); ///*************
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpGet("{id}")]
+        [HttpGet("getuser/{id}")]
         public IActionResult GetUser(int id)
         {
             try
@@ -79,6 +58,27 @@ namespace Agenda_Back_Tup1.Controllers
 
                 return Ok(userDto);
                
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        
+        [HttpPost("newuser")]
+        public IActionResult PostUser(UserDTOCreacion userDtoCreacion)
+        {
+            try
+            {
+                
+                var user = _mapper.Map<User>(userDtoCreacion);
+
+
+                var userItem = _userRepository.AddUser(user);
+
+                var userItemDto = _mapper.Map<UserDTO>(userItem);
+
+                return CreatedAtAction("Get", new { id = userItemDto.Id }, userItemDto); ///*************
             }
             catch (Exception ex)
             {

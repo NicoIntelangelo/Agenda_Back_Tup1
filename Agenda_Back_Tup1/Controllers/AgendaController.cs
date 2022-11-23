@@ -27,7 +27,7 @@ namespace Agenda_Back_Tup1.Controllers
         }
 
 
-        [HttpGet("getAgendas")]
+        [HttpGet("getall")]
         public IActionResult GetAgendas()
         {
             try
@@ -45,7 +45,7 @@ namespace Agenda_Back_Tup1.Controllers
         }
 
 
-        [HttpGet("getAgendasUser")]
+        [HttpGet("getAgendas")]
         public IActionResult GetAgendasOfUser()
         {
             try
@@ -75,7 +75,7 @@ namespace Agenda_Back_Tup1.Controllers
         }
 
         
-        [HttpPost]
+        [HttpPost("newagenda")]
         public IActionResult CreateAgenda(AgendaCreacionDTO agendaCreacionDto)
         {
             try

@@ -29,7 +29,7 @@ namespace Agenda_Back_Tup1.Controllers
         }
 
         
-        [HttpGet("getByAgenda/{agendaId}")]
+        [HttpGet("agendaContacts/{agendaId}")]
         public IActionResult GetAgenda(int agendaId)
         {
             try
@@ -52,16 +52,16 @@ namespace Agenda_Back_Tup1.Controllers
             try 
             { 
           
-                    var contacto = _contactoRepository.GetContacto(id); 
+                 var contacto = _contactoRepository.GetContacto(id); 
 
-                    if (contacto == null)
-                    {
-                        return NotFound();
-                    }
+                 if (contacto == null)
+                 {
+                     return NotFound();
+                 }
 
-                    var contactoDto = _mapper.Map<ContactoDTO>(contacto); // mapea la mascota que saco de la db(entidad), en el <MascotaDto>
+                 var contactoDto = _mapper.Map<ContactoDTO>(contacto); 
 
-                    return Ok(contactoDto);
+                 return Ok(contactoDto);
            
             }
             catch (Exception ex)
@@ -72,27 +72,8 @@ namespace Agenda_Back_Tup1.Controllers
 
         }
 
-        //[HttpPost]
-        //public IActionResult Post(ContactoDTO contactoDto)
-        //{
-        //    try
-        //    {
-        //        var contacto = _mapper.Map<Contacto>(contactoDto);
 
-        //        var contactoCreated = _contactoRepository.AddContacto(contacto);
-
-        //        var contactoItemDto = _mapper.Map<ContactoDTO>(contactoCreated);
-
-        //        return Created("Created", contactoItemDto);
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
-
-        [HttpPost]
+        [HttpPost("newcontact")]
         public IActionResult Post(ContactoDTO contactoDto)
         {
             try
