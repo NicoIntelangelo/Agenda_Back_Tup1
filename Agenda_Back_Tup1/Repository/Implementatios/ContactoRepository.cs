@@ -1,6 +1,7 @@
 ﻿using Agenda_Back_Tup1.Data;
 using Agenda_Back_Tup1.Entities;
 using Agenda_Back_Tup1.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Agenda_Back_Tup1.Repository.Implementatios
 {
@@ -24,6 +25,14 @@ namespace Agenda_Back_Tup1.Repository.Implementatios
             return _context.Contactos.Find(id);
 
         }
+        public Contacto AddContacto(Contacto contacto)
+        {
+            _context.Contactos.Add(contacto);
+            _context.SaveChanges();
+            return contacto;
+        }
+
+
 
 
     }

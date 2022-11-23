@@ -25,7 +25,7 @@ namespace Agenda_Back_Tup1.Controllers
 
         
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetuUsers()
         {
             try
             {
@@ -42,7 +42,7 @@ namespace Agenda_Back_Tup1.Controllers
         }
         
         [HttpPost]
-        public IActionResult Post(UserDTOCreacion userDtoCreacion)
+        public IActionResult PostUser(UserDTOCreacion userDtoCreacion)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace Agenda_Back_Tup1.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult GetUser(int id)
         {
             try
             {

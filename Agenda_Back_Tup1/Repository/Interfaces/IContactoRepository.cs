@@ -8,7 +8,7 @@ namespace Agenda_Back_Tup1.Repository.Interfaces
         List<Contacto> GetListContactos(int agendaId);
         Contacto GetContacto(int id);
         //void DeleteContacto(Contacto contacto);
-        //Contacto AddContacto(Contacto contacto);
+        public Contacto AddContacto(Contacto contacto);
         //void UpdateContacto(Contacto contacto);
     }
 }
