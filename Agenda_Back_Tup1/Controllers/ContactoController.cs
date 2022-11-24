@@ -12,7 +12,7 @@ namespace Agenda_Back_Tup1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]//******* para que tengamos que tener un token valido para acceder
+    //[Authorize]//******* para que tengamos que tener un token valido para acceder
     public class ContactoController : ControllerBase
     {
         private readonly IMapper _mapper;

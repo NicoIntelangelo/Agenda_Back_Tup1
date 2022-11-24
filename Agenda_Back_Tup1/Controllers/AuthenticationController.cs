@@ -1,5 +1,7 @@
-﻿using Agenda_Back_Tup1.Models.DTO;
+﻿using Agenda_Back_Tup1.Entities;
+using Agenda_Back_Tup1.Models.DTO;
 using Agenda_Back_Tup1.Repository.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -15,11 +17,14 @@ namespace Agenda_Back_Tup1.Controllers
     {
         private readonly IConfiguration _config;
         private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
+        
 
-        public AuthenticationController(IConfiguration config, IUserRepository userRepository)
+        public AuthenticationController(IConfiguration config, IUserRepository userRepository, IMapper mapper)
         {
             _config = config; 
             this._userRepository = userRepository;
+            _mapper = mapper;   
 
         }
 
@@ -55,6 +60,25 @@ namespace Agenda_Back_Tup1.Controllers
                 .WriteToken(jwtSecurityToken);
 
             return Ok(tokenToReturn);
+        }
+
+        [HttpPost("newuser")]
+        public IActionResult PostUser(UserDTOCreacion userDtoCreacion)
+        {
+            try
+            {
+                var user = _mapper.Map<User>(userDtoCreacion);
+
+                var userItem = _userRepository.AddUser(user);
+
+                var userItemDto = _mapper.Map<UserDTO>(userItem);
+
+                return Created("Created", userItemDto); ///*************
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
