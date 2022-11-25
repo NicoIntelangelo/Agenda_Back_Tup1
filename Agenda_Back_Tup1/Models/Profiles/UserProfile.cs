@@ -13,6 +13,9 @@ namespace Agenda_Back_Tup1.Models.Profiles
 
             CreateMap<User, UserDTOCreacion>();
             CreateMap<UserDTOCreacion, User>();
+
+            CreateMap<User, UserModificacionDataDTO>();
+            CreateMap<UserModificacionDataDTO, User>();
         }
     }
 }

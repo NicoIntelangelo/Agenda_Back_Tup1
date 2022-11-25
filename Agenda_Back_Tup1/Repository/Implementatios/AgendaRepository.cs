@@ -42,6 +42,24 @@ namespace Agenda_Back_Tup1.Repository.Implementatios
             
             return id;
         }
-        
+
+        public void DeleteAgenda(Agenda agenda)
+        {
+            _context.Agendas.Remove(agenda);
+            _context.SaveChanges();
+        }
+        public void UpdateAgenda(Agenda agenda)
+        {
+            var agendaItem = _context.Agendas.FirstOrDefault(a => a.Id == agenda.Id);
+
+            if (agendaItem != null)
+            {
+                agendaItem.Nombre = agenda.Nombre;
+
+                _context.SaveChanges();
+            }
+        }
+
+
     }
 }

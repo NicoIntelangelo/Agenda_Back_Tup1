@@ -2,6 +2,7 @@
 using Agenda_Back_Tup1.Entities;
 using Agenda_Back_Tup1.Models.DTO;
 using Agenda_Back_Tup1.Repository.Interfaces;
+using System.Diagnostics.Contracts;
 
 namespace Agenda_Back_Tup1.Repository.Implementatios
 {
@@ -39,10 +40,17 @@ namespace Agenda_Back_Tup1.Repository.Implementatios
             return _context.Users.SingleOrDefault(u => u.Id == id);
         }
 
-        public void UpdateUser(User user)
+        public void UpdateUserData(User user)
         {
-            _context.Users.Update(user);
-            _context.SaveChanges();
+            var userItem = _context.Users.FirstOrDefault(u => u.Id == user.Id);
+
+            if (userItem != null)
+            {
+                userItem.Nombre = user.Nombre;
+                userItem.Telefono = user.Telefono;
+
+                _context.SaveChanges();
+            }
         }
 
         public User? ValidateUser(AuthenticationRequestBody authRequestBody)

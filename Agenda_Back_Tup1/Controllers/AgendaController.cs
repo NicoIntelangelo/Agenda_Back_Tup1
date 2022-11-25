@@ -95,5 +95,94 @@ namespace Agenda_Back_Tup1.Controllers
             }
            
         }
+
+        [HttpDelete("deleteAgenda/{id}")]
+        public IActionResult DeleteAgenda(int id)
+        {
+            try
+            {
+                int userId = Int32.Parse(HttpContext.User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+                var listAgenda = _agendaUserRepository.GetAgendasUser(userId);
+
+                List<Agenda> listAgendas = new List<Agenda>();
+
+                var agenda = _agendaRepository.GetAgendaById(id);
+
+                foreach (var agendaUser in listAgenda)
+                {
+                    if (agendaUser.AgendaId == id)
+                    {
+
+                        if (agenda == null)
+                        {
+                            return NotFound();
+                        }
+
+                        _agendaRepository.DeleteAgenda(agenda);
+
+                        return NoContent();
+                    }
+
+                }
+                return Unauthorized();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
+
+        [HttpPut("editAgenda/{id}")] 
+        public IActionResult EditAgenda(int id, AgendaCreacionDTO agendaDto)
+        {
+            try
+            {
+                int userId = Int32.Parse(HttpContext.User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value); 
+
+                var listAgenda = _agendaUserRepository.GetAgendasUser(userId); 
+
+                List<Agenda> listAgendas = new List<Agenda>(); 
+
+                var agenda = _mapper.Map<Agenda>(agendaDto);
+                
+                foreach (var agendaUser in listAgenda) 
+                {
+                   if(agendaUser.AgendaId == id)
+                    {
+
+                        if (id != agenda.Id)
+                        {
+                            return NotFound();
+                        }
+                        
+                        var agendaItem = _agendaRepository.GetAgendaById(id);
+
+                        if (agendaItem == null)
+                        {
+                            return NotFound();
+                        }
+
+                        _agendaRepository.UpdateAgenda(agenda);
+
+                        var agendaModificada = _agendaRepository.GetAgendaById(id);
+
+                        var agendaModificadaDto = _mapper.Map<AgendaDTO>(agendaModificada);
+
+                        return Ok(agendaModificadaDto);
+                    }
+                }
+                return Unauthorized();
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+
+        }
     }
 }

@@ -40,7 +40,7 @@ namespace Agenda_Back_Tup1.Repository.Implementatios
 
         public void UpdateContact(Contacto contacto)
         {
-            var contactItem = _context.Contactos.FirstOrDefault(x => x.Id == contacto.Id);
+            var contactItem = _context.Contactos.FirstOrDefault(c => c.Id == contacto.Id);//(x => x.Id == contacto.Id);
 
             if (contactItem != null)
             {

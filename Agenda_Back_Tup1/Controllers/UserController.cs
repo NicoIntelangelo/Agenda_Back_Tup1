@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Agenda_Back_Tup1.Controllers
 {
@@ -64,13 +65,13 @@ namespace Agenda_Back_Tup1.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        
+
         //[HttpPost("newuser")]
         //public IActionResult PostUser(UserDTOCreacion userDtoCreacion)
         //{
         //    try
         //    {
-                
+
         //        var user = _mapper.Map<User>(userDtoCreacion);
 
 
@@ -85,5 +86,75 @@ namespace Agenda_Back_Tup1.Controllers
         //        return BadRequest(ex.Message);
         //    }
         //}
+
+
+        [HttpDelete("deleteUser/{id}")]
+        public IActionResult DeleteUser(int id)
+        {
+            try
+            {
+
+                var user = _userRepository.GetUser(id);
+
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                _userRepository.DeleteUser(user);
+
+                return NoContent();
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+        
+        
+        [HttpPut("editUserData/{id}")] //para editar telefono y nombre
+        public IActionResult EditUserData(int id, UserModificacionDataDTO userModifDTO)
+        {
+            try
+            {
+                int userSesionId = Int32.Parse(HttpContext.User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+                
+                var user = _mapper.Map<User>(userModifDTO);
+
+                if (id != userSesionId)
+                {
+                    return Unauthorized();
+                }
+                
+                if (id != user.Id)
+                {
+                    return NotFound();
+                }
+
+                var userItem = _userRepository.GetUser(id);
+
+                if (userItem == null)
+                {
+                    return NotFound();
+                }
+
+                _userRepository.UpdateUserData(user);
+
+                var userModificado = _userRepository.GetUser(id);
+
+                var userModificadoDto = _mapper.Map<UserDTO>(userModificado);
+
+                return Ok(userModificadoDto);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+
+        }
     }
 }

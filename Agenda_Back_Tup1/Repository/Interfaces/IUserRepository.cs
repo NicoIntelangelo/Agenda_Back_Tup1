@@ -9,7 +9,7 @@ namespace Agenda_Back_Tup1.Repository.Interfaces
         User GetUser(int id);
         void DeleteUser(User user);
         User AddUser(User user);
-        void UpdateUser(User user);
+        public void UpdateUserData(User user);
         public User? ValidateUser(AuthenticationRequestBody authRequestBody);
     }
 }
