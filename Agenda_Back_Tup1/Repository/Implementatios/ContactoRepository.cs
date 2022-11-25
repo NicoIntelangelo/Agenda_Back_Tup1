@@ -45,6 +45,7 @@ namespace Agenda_Back_Tup1.Repository.Implementatios
             if (contactItem != null)
             {
                 contactItem.Nombre = contacto.Nombre;
+                contactItem.Apellido = contacto.Apellido;
                 contactItem.Telefono = contacto.Telefono;
                 contactItem.Direccion = contacto.Direccion;
                 contactItem.Mail = contacto.Mail;
