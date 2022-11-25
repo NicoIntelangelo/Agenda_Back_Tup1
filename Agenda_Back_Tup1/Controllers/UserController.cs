@@ -66,27 +66,6 @@ namespace Agenda_Back_Tup1.Controllers
             }
         }
 
-        //[HttpPost("newuser")]
-        //public IActionResult PostUser(UserDTOCreacion userDtoCreacion)
-        //{
-        //    try
-        //    {
-
-        //        var user = _mapper.Map<User>(userDtoCreacion);
-
-
-        //        var userItem = _userRepository.AddUser(user);
-
-        //        var userItemDto = _mapper.Map<UserDTO>(userItem);
-
-        //        return Created("Created", userItemDto); ///*************
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
-
 
         [HttpDelete("deleteUser/{id}")]
         public IActionResult DeleteUser(int id)

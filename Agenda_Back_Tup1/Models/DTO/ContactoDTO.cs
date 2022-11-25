@@ -10,6 +10,6 @@ namespace Agenda_Back_Tup1.Models.DTO
         public string Mail { get; set; }
         public string Telefono { get; set; }
         public string Direccion { get; set; }
-        //public int AgendaId { get; set; } 
+        public int AgendaId { get; set; } 
     }
 }
