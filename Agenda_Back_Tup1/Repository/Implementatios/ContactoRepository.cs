@@ -32,6 +32,27 @@ namespace Agenda_Back_Tup1.Repository.Implementatios
             return contacto;
         }
 
+        public void DeleteContact(Contacto contacto)
+        { 
+            _context.Contactos.Remove(contacto);
+            _context.SaveChanges();
+        }
+
+        public void UpdateContact(Contacto contacto)
+        {
+            var contactItem = _context.Contactos.FirstOrDefault(x => x.Id == contacto.Id);
+
+            if (contactItem != null)
+            {
+                contactItem.Nombre = contacto.Nombre;
+                contactItem.Telefono = contacto.Telefono;
+                contactItem.Direccion = contacto.Direccion;
+                contactItem.Mail = contacto.Mail;
+
+                _context.SaveChanges();
+            }
+
+        }
 
 
 

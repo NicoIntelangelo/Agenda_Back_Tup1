@@ -73,8 +73,8 @@ namespace Agenda_Back_Tup1.Controllers
         }
 
 
-        [HttpPost("newcontact")]
-        public IActionResult Post(ContactoDTO contactoDto)
+        [HttpPost("newContact")]
+        public IActionResult CreateContact(ContactoDTO contactoDto)
         {
             try
             {
@@ -105,6 +105,68 @@ namespace Agenda_Back_Tup1.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpDelete("deleteContact/{id}")]
+        public IActionResult DeleteContact(int id)
+        {
+            try
+            {
+
+                var contacto = _contactoRepository.GetContacto(id);
+
+                if (contacto == null)
+                {
+                    return NotFound();
+                }
+
+                _contactoRepository.DeleteContact(contacto);
+
+                return NoContent();
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
+        [HttpPut("editContact/{id}")]
+        public IActionResult EditContact(int id, ContactoDTO contactoDTO)
+        {
+            try
+            {
+
+                var contacto = _mapper.Map<Contacto>(contactoDTO);
+
+                if (id != contacto.Id)
+                {
+                    return NotFound();
+                }
+
+                var contactoItem = _contactoRepository.GetContacto(id);
+
+                if (contactoItem == null)
+                {
+                    return NotFound();
+                }
+
+                _contactoRepository.UpdateContact(contacto);
+
+                var contactoModificado = _contactoRepository.GetContacto(id);
+
+                var contactoModificadoDto = _mapper.Map<ContactoDTO>(contactoModificado);
+
+                return Ok(contactoModificadoDto);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+
         }
 
     }
