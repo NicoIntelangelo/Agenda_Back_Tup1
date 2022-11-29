@@ -30,10 +30,8 @@ namespace Agenda_Back_Tup1.Repository.Implementatios
 
         }
 
-        public int CreateAgenda(AgendaCreacionDTO agendaDto)
+        public int CreateAgenda(Agenda agenda)
         {
-            var agenda = _mapper.Map<Agenda>(agendaDto);
-            
             _context.Agendas.Add(agenda);
             
             _context.SaveChanges();

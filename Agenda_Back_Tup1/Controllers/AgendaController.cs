@@ -45,13 +45,13 @@ namespace Agenda_Back_Tup1.Controllers
         }
 
 
-        [HttpGet("getAgendas")]
-        public IActionResult GetAgendasOfUser()
+        [HttpGet("getAgendas/{userId}")]
+        public IActionResult GetAgendasOfUser(int userId)
         {
             try
             {
-                int userId = Int32.Parse(HttpContext.User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value); // toma el id del usuario desde el token
-
+                //int userId = Int32.Parse(HttpContext.User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value); // toma el id del usuario desde el token
+                
                 var listAgenda = _agendaUserRepository.GetAgendasUser(userId); //trae todas las ajendas las cuales el user es dueño
 
                 List<Agenda> listAgendas = new List<Agenda>(); //crea una lista de objetos ajenda
@@ -80,9 +80,12 @@ namespace Agenda_Back_Tup1.Controllers
         {
             try
             {
-                int id = _agendaRepository.CreateAgenda(agendaCreacionDto); //la fun createagenda retorna el val del id creado
-
                 int userId = Int32.Parse(HttpContext.User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+                var agenda = _mapper.Map<Agenda>(agendaCreacionDto);
+
+                int id = _agendaRepository.CreateAgenda(agenda); //la fun createagenda retorna el val del id creado
+
 
                 _agendaUserRepository.addAgendaUser(userId, id); 
 
@@ -119,6 +122,7 @@ namespace Agenda_Back_Tup1.Controllers
                             return NotFound();
                         }
 
+                        _agendaUserRepository.DeleteAgendaUser(id);//no elimina la agenda sino que elimina todas las relaciones con los dueños
                         _agendaRepository.DeleteAgenda(agenda);
 
                         return NoContent();

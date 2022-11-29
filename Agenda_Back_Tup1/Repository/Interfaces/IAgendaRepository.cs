@@ -7,7 +7,7 @@ namespace Agenda_Back_Tup1.Repository.Interfaces
     {
         public List<Agenda> GetListAgendas();
         public Agenda GetAgendaById(int agendaId);
-        public int CreateAgenda(AgendaCreacionDTO agendaDto);
+        public int CreateAgenda(Agenda agenda);
         public void DeleteAgenda(Agenda agenda);
         public void UpdateAgenda(Agenda agenda);
     }

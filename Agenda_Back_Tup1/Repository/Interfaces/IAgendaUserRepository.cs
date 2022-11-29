@@ -7,5 +7,6 @@ namespace Agenda_Back_Tup1.Repository.Interfaces
     {
         public List<AgendasUsers> GetAgendasUser(int userId);
         public void addAgendaUser(int userId, int AgendaId);
+        public void DeleteAgendaUser(int agendaId);
     }
 }

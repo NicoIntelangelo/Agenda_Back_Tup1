@@ -59,6 +59,7 @@ namespace Agenda_Back_Tup1.Controllers
             var tokenToReturn = new JwtSecurityTokenHandler() //Pasamos el token a string
                 .WriteToken(jwtSecurityToken);
 
+           
             return Ok(tokenToReturn);
         }
 
@@ -80,5 +81,22 @@ namespace Agenda_Back_Tup1.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("userId")]
+        public IActionResult GetUserId()
+        {
+            try
+            {
+                int userSesionId = Int32.Parse(HttpContext.User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+                return Ok(userSesionId); ///*************
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
     }
 }

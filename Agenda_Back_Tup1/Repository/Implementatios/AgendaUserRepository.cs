@@ -23,7 +23,7 @@ namespace Agenda_Back_Tup1.Repository.Implementatios
             return _context.AgendasUsers.Where(au => au.UserId == userId).ToList();
 
         }
-        public void addAgendaUser (int userId , int AgendaId)//(AgendaUserDTO agendaUserDto)
+        public void addAgendaUser (int userId , int AgendaId)
         {
             AgendasUsers agendaUser = new AgendasUsers();
             {
@@ -39,5 +39,19 @@ namespace Agenda_Back_Tup1.Repository.Implementatios
 
         }
 
+
+        public void DeleteAgendaUser(int agendaId)
+        {
+            var agendas = _context.AgendasUsers.Where(au => au.AgendaId == agendaId).ToList();
+
+            foreach(var agenda in agendas)
+            {
+                _context.AgendasUsers.Remove(agenda);
+                _context.SaveChanges();
+            }
+
+
+
+        }
     }
 }

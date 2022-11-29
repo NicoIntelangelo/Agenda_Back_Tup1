@@ -72,12 +72,18 @@ namespace Agenda_Back_Tup1.Controllers
         {
             try
             {
+                int userSesionId = Int32.Parse(HttpContext.User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
                 var user = _userRepository.GetUser(id);
 
                 if (user == null)
                 {
                     return NotFound();
+                }
+
+                if (id != userSesionId)
+                {
+                    return Unauthorized();
                 }
 
                 _userRepository.DeleteUser(user);
