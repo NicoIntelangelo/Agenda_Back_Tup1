@@ -99,6 +99,26 @@ namespace Agenda_Back_Tup1.Controllers
            
         }
 
+        [HttpPost("addAgendaUser/{agendaid}")]
+        public IActionResult AddAgendaUser(int agendaid)
+        {
+            try
+            {
+                int userId = Int32.Parse(HttpContext.User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+
+                _agendaUserRepository.addAgendaUser(userId,agendaid);
+
+                return Created("Created", agendaid);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
         [HttpDelete("deleteAgenda/{id}")]
         public IActionResult DeleteAgenda(int id)
         {
@@ -122,8 +142,8 @@ namespace Agenda_Back_Tup1.Controllers
                             return NotFound();
                         }
 
-                        _agendaUserRepository.DeleteAgendaUser(id);//no elimina la agenda sino que elimina todas las relaciones con los dueños
-                        _agendaRepository.DeleteAgenda(agenda);
+                        _agendaUserRepository.DeleteAgendaUser(id);//no elimina la agenda sino que elimina todas las relaciones con los dueños, la agenda sigue existiendo
+                        //_agendaRepository.DeleteAgenda(agenda);
 
                         return NoContent();
                     }

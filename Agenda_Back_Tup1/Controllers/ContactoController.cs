@@ -74,42 +74,6 @@ namespace Agenda_Back_Tup1.Controllers
         }
 
 
-        //[HttpPost("newContact")]
-        //public IActionResult CreateContact(ContactoDTO contactoDto)
-        //{
-        //    try
-        //    {
-
-        //        var contacto = _mapper.Map<Contacto>(contactoDto);
-
-        //        //int userId = Int32.Parse(HttpContext.User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value); // toma el id del usuario desde el token
-
-        //        int userId = 2;
-
-        //        var listAgenda = _agendaUserRepository.GetAgendasUser(userId);
-
-
-        //        foreach (var agendaId in listAgenda)
-        //        {
-        //            if (contacto.AgendaId == agendaId.AgendaId)
-        //            {
-        //                var contactoCreated = _contactoRepository.AddContacto(contacto);
-
-        //                var contactoItemDto = _mapper.Map<ContactoDTO>(contactoCreated);
-
-        //                return Created("Created", contactoItemDto);
-        //            }
-        //        }
-
-        //        return BadRequest("Id de agenda Inexistente");
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
-
         [HttpPost("newContact")]
         public IActionResult CreateContact(ContactoDTO contactoDto)
         {
@@ -118,16 +82,26 @@ namespace Agenda_Back_Tup1.Controllers
 
                 var contacto = _mapper.Map<Contacto>(contactoDto);
 
-                
+                int userId = Int32.Parse(HttpContext.User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value); // toma el id del usuario desde el token
+
+                //int userId = 2;
+
+                var listAgenda = _agendaUserRepository.GetAgendasUser(userId);
 
 
-                
-                  
+                foreach (var agendaId in listAgenda)
+                {
+                    if (contacto.AgendaId == agendaId.AgendaId)
+                    {
                         var contactoCreated = _contactoRepository.AddContacto(contacto);
 
                         var contactoItemDto = _mapper.Map<ContactoDTO>(contactoCreated);
 
                         return Created("Created", contactoItemDto);
+                    }
+                }
+
+                return Unauthorized(); //"Id de agenda Inexistente"
 
             }
             catch (Exception ex)
@@ -135,6 +109,32 @@ namespace Agenda_Back_Tup1.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        //[HttpPost("newContact")]
+        //public IActionResult CreateContact(ContactoDTO contactoDto)
+        //{
+        //    try
+        //    {
+
+        //        var contacto = _mapper.Map<Contacto>(contactoDto);
+
+
+
+
+
+
+        //                var contactoCreated = _contactoRepository.AddContacto(contacto);
+
+        //                var contactoItemDto = _mapper.Map<ContactoDTO>(contactoCreated);
+
+        //                return Created("Created", contactoItemDto);
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
 
         [HttpDelete("deleteContact/{id}")]
         public IActionResult DeleteContact(int id)
