@@ -63,13 +63,23 @@ namespace Agenda_Back_Tup1.Controllers
             return Ok(tokenToReturn);
         }
 
-        [HttpPost("newuser")]
+        [HttpPost]//("newuser")
         public IActionResult PostUser(UserDTOCreacion userDtoCreacion)
         {
             try
             {
                 var user = _mapper.Map<User>(userDtoCreacion);
 
+                var usersActivos = _userRepository.GetListUser();
+
+                foreach(var userActivo in usersActivos)
+                {
+                    if(user.Email == userActivo.Email)
+                    {
+                        return BadRequest("El email ingresado ya es utilizado en una cuenta activa");
+                    }
+                }
+                
                 var userItem = _userRepository.AddUser(user);
 
                 var userItemDto = _mapper.Map<UserDTO>(userItem);
@@ -82,7 +92,7 @@ namespace Agenda_Back_Tup1.Controllers
             }
         }
 
-        [HttpGet("userId")]
+        [HttpGet("userId")]//Test
         public IActionResult GetUserId()
         {
             try

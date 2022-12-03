@@ -30,7 +30,7 @@ namespace Agenda_Back_Tup1.Controllers
         }
 
         
-        [HttpGet("agendaContacts/{agendaId}")]
+        [HttpGet("agenda/{agendaId}")]
         public IActionResult GetAgenda(int agendaId)
         {
             try
@@ -47,7 +47,7 @@ namespace Agenda_Back_Tup1.Controllers
             }
         }
 
-        [HttpGet("getContact/{id}")]
+        [HttpGet("{id}")]//getContact/
         public IActionResult GetContact(int id)
         {
             try 
@@ -74,7 +74,7 @@ namespace Agenda_Back_Tup1.Controllers
         }
 
 
-        [HttpPost("newContact")]
+        [HttpPost] //("newContact")
         public IActionResult CreateContact(ContactoDTO contactoDto)
         {
             try
@@ -110,33 +110,8 @@ namespace Agenda_Back_Tup1.Controllers
             }
         }
 
-        //[HttpPost("newContact")]
-        //public IActionResult CreateContact(ContactoDTO contactoDto)
-        //{
-        //    try
-        //    {
 
-        //        var contacto = _mapper.Map<Contacto>(contactoDto);
-
-
-
-
-
-
-        //                var contactoCreated = _contactoRepository.AddContacto(contacto);
-
-        //                var contactoItemDto = _mapper.Map<ContactoDTO>(contactoCreated);
-
-        //                return Created("Created", contactoItemDto);
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
-
-        [HttpDelete("deleteContact/{id}")]
+        [HttpDelete("{id}")]//deleteContact/
         public IActionResult DeleteContact(int id)
         {
             try
@@ -161,7 +136,7 @@ namespace Agenda_Back_Tup1.Controllers
 
         }
 
-        [HttpPut("editContact/{id}")]
+        [HttpPut("{id}")] //editContact/
         public IActionResult EditContact(int id, ContactoDTO contactoDTO)
         {
             try

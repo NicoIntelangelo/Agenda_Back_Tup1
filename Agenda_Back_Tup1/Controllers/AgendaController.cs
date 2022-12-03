@@ -45,12 +45,12 @@ namespace Agenda_Back_Tup1.Controllers
         }
 
 
-        [HttpGet("getAgendas/{userId}")]
-        public IActionResult GetAgendasOfUser(int userId)
+        [HttpGet] 
+        public IActionResult GetAgendasOfUser()
         {
             try
             {
-                //int userId = Int32.Parse(HttpContext.User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value); // toma el id del usuario desde el token
+                int userId = Int32.Parse(HttpContext.User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value); // toma el id del usuario desde el token
                 
                 var listAgenda = _agendaUserRepository.GetAgendasUser(userId); //trae todas las ajendas las cuales el user es dueño
 
@@ -75,7 +75,7 @@ namespace Agenda_Back_Tup1.Controllers
         }
 
         
-        [HttpPost("newagenda")]
+        [HttpPost]//("newagenda")
         public IActionResult CreateAgenda(AgendaCreacionDTO agendaCreacionDto)
         {
             try
@@ -99,7 +99,7 @@ namespace Agenda_Back_Tup1.Controllers
            
         }
 
-        [HttpPost("addAgendaUser/{agendaid}")]
+        [HttpPut("{agendaid}")]
         public IActionResult AddAgendaUser(int agendaid)
         {
             try
@@ -119,7 +119,7 @@ namespace Agenda_Back_Tup1.Controllers
 
         }
 
-        [HttpDelete("deleteAgenda/{id}")]
+        [HttpDelete("{id}")]
         public IActionResult DeleteAgenda(int id)
         {
             try
@@ -159,7 +159,7 @@ namespace Agenda_Back_Tup1.Controllers
         }
 
 
-        [HttpPut("editAgenda/{id}")] 
+        [HttpPut("edit/{id}")] 
         public IActionResult EditAgenda(int id, AgendaCreacionDTO agendaDto)
         {
             try

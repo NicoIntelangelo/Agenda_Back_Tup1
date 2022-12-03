@@ -43,7 +43,7 @@ namespace Agenda_Back_Tup1.Controllers
         }
         
 
-        [HttpGet("getuser/{id}")]
+        [HttpGet("{id}")]//getuser/
         public IActionResult GetUser(int id)
         {
             try
@@ -67,7 +67,7 @@ namespace Agenda_Back_Tup1.Controllers
         }
 
 
-        [HttpDelete("deleteUser/{id}")]
+        [HttpDelete("{id}")]//deleteUser/
         public IActionResult DeleteUser(int id)
         {
             try
@@ -99,7 +99,7 @@ namespace Agenda_Back_Tup1.Controllers
         }
         
         
-        [HttpPut("editUserData/{id}")] //para editar telefono y nombre
+        [HttpPut("{id}")] //para editar telefono y nombre//editUserData/
         public IActionResult EditUserData(int id, UserModificacionDataDTO userModifDTO)
         {
             try
@@ -138,7 +138,6 @@ namespace Agenda_Back_Tup1.Controllers
             {
                 return BadRequest(ex.Message);
             }
-
 
         }
     }
