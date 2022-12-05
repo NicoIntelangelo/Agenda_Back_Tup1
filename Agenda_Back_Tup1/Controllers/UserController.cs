@@ -115,7 +115,7 @@ namespace Agenda_Back_Tup1.Controllers
                 
                 if (id != user.Id)
                 {
-                    return NotFound();
+                    return Unauthorized();
                 }
 
                 var userItem = _userRepository.GetUser(id);

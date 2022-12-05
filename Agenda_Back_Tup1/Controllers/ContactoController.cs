@@ -84,8 +84,6 @@ namespace Agenda_Back_Tup1.Controllers
 
                 int userId = Int32.Parse(HttpContext.User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value); // toma el id del usuario desde el token
 
-                //int userId = 2;
-
                 var listAgenda = _agendaUserRepository.GetAgendasUser(userId);
 
 
@@ -116,17 +114,28 @@ namespace Agenda_Back_Tup1.Controllers
         {
             try
             {
+                int userId = Int32.Parse(HttpContext.User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value); // toma el id del usuario desde el token
+
+                var listAgenda = _agendaUserRepository.GetAgendasUser(userId);
 
                 var contacto = _contactoRepository.GetContacto(id);
-
+                
                 if (contacto == null)
                 {
                     return NotFound();
                 }
+                
+                foreach(var agendaUser in listAgenda)
+                {
+                    if(agendaUser.AgendaId == contacto.AgendaId)
+                    {
+                        _contactoRepository.DeleteContact(contacto);
 
-                _contactoRepository.DeleteContact(contacto);
-
-                return NoContent();
+                        return NoContent();
+                    }
+                }
+                return Unauthorized();
+                
 
             }
             catch (Exception ex)
